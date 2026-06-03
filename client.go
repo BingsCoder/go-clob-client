@@ -385,7 +385,8 @@ func (c *ClobClient) GetFeeRateBps(tokenID string) (int, error) {
 	}
 	n := toInt64(m["base_fee"])
 	if n < 0 || n > math.MaxInt32 {
-		n = 0
+		c.feeRates[tokenID] = 0
+		return 0, nil
 	}
 	fr := int(n)
 	c.feeRates[tokenID] = fr
