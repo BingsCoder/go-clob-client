@@ -3,6 +3,7 @@ package clobclient
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -209,7 +210,11 @@ func (c *ClobClient) GetVersion() int {
 	}
 	if m, ok := result.(map[string]interface{}); ok {
 		if v, ok := m["version"]; ok {
-			return int(toInt64(v))
+			n := toInt64(v)
+			if n < 0 || n > math.MaxInt32 {
+				return 2
+			}
+			return int(n)
 		}
 	}
 	return 2
@@ -378,7 +383,11 @@ func (c *ClobClient) GetFeeRateBps(tokenID string) (int, error) {
 	if !ok {
 		return 0, nil
 	}
-	fr := int(toInt64(m["base_fee"]))
+	n := toInt64(m["base_fee"])
+	if n < 0 || n > math.MaxInt32 {
+		n = 0
+	}
+	fr := int(n)
 	c.feeRates[tokenID] = fr
 	return fr, nil
 }

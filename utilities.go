@@ -1,7 +1,7 @@
 package clobclient
 
 import (
-	"crypto/sha1"
+	"crypto/sha1" //nolint:gosec // SHA1 is required by the Polymarket API for orderbook summary hashing (not used for security)
 	"encoding/json"
 	"fmt"
 	"strconv"

@@ -356,8 +356,6 @@ func (ob *OrderBuilder) CalculateSellMarketPrice(positions []map[string]interfac
 	for i := len(positions) - 1; i >= 0; i-- {
 		p := positions[i]
 		size, _ := strconv.ParseFloat(fmt.Sprintf("%v", p["size"]), 64)
-		price, _ := strconv.ParseFloat(fmt.Sprintf("%v", p["price"]), 64)
-		_ = price
 		total += size
 		if total >= amountToMatch {
 			price, _ := strconv.ParseFloat(fmt.Sprintf("%v", p["price"]), 64)
